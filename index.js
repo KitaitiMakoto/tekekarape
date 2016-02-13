@@ -70,6 +70,22 @@ class NullTask extends Task {
   }
 }
 
+class PrerequisiteTask extends Task {
+  constructor(path) {
+    super();
+    this.prerequisite = (path instanceof Target) ?
+      path : new LocalFileTarget(path);
+  }
+
+  run() {
+    return this.prerequisite.exists().then(exists => {
+      if (! exists) {
+        return Promise.reject(new Error(`Prerequisite file not exist: ${this.prerequisite.path}`));
+      }
+    });
+  }
+}
+
 class Target {
 }
 
@@ -124,7 +140,7 @@ class LocalFileTarget extends Target {
   }
 }
 
-export {Workflow, DAG, Task, Target, LocalFileTarget};
+export {Workflow, DAG, Task, PrerequisiteTask, Target, LocalFileTarget};
 export default {
   createLocalFileTarget(path) {
     return new LocalFileTarget(path);
@@ -144,6 +160,10 @@ export default {
     task._run = descriptor.run;
 
     return task;
+  },
+
+  createPrerequisiteTask(path) {
+    return new PrerequisiteTask(path);
   },
 
   run(task) {
