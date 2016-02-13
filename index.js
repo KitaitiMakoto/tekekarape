@@ -24,10 +24,14 @@ class DAG {
   }
 
   addTask(task) {
-    task.requires.forEach(t => {
-      this.edges.push([task, t]);
-      this.addTask(t);
-    });
+    if (task.requires.length === 0) {
+      this.edges.push([task, new NullTask()])
+    } else {
+      task.requires.forEach(t => {
+        this.edges.push([task, t]);
+        this.addTask(t);
+      });
+    }
   }
 
   makeGraph() {
@@ -57,6 +61,12 @@ class Task {
       }
       return ran;
     });
+  }
+}
+
+class NullTask extends Task {
+  run() {
+    return Promise.resolve();
   }
 }
 
