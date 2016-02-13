@@ -1,0 +1,29 @@
+{
+  "name": "tekekarape",
+  "version": "1.0.0",
+  "description": "A tiny workflow engine.",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KitaitiMakoto/tekekarape.git"
+  },
+  "keywords": [
+    "workflow"
+  ],
+  "author": "KITAITI Makoto",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/KitaitiMakoto/tekekarape/issues"
+  },
+  "homepage": "https://github.com/KitaitiMakoto/tekekarape#readme",
+  "dependencies": {
+    "toposort": "^0.2.12"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2"
+  }
+}
