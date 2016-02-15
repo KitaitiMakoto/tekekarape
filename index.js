@@ -19,7 +19,6 @@ class Workflow {
 
 class DAG {
   constructor() {
-    this.tasks = {};
     this.edges = [];
   }
 
