@@ -6,7 +6,7 @@ class Workflow {
   run(task) {
     let dag = new DAG();
     dag.addTask(task);
-    let graph = dag.makeGraph();
+    let graph = dag.sort();
     let firstTask = graph.shift();
     graph.reduce((flow, t) => {
       return flow.then(() => t.run())
@@ -33,10 +33,10 @@ class DAG {
     }
   }
 
-  makeGraph() {
-    let graph = toposort(this.edges);
-    graph.reverse();
-    return graph;
+  sort() {
+    let sorted = toposort(this.edges);
+    sorted.reverse();
+    return sorted;
   }
 }
 
