@@ -73,14 +73,14 @@ class NullTask extends Task {
 class PrerequisiteTask extends Task {
   constructor(path) {
     super();
-    this.prerequisite = (path instanceof Target) ?
+    this.output = (path instanceof Target) ?
       path : new LocalFileTarget(path);
   }
 
   run() {
-    return this.prerequisite.exists().then(exists => {
+    return this.output.exists().then(exists => {
       if (! exists) {
-        return Promise.reject(new Error(`Prerequisite file not exist: ${this.prerequisite.path}`));
+        return Promise.reject(new Error(`Prerequisite file not exist: ${this.output.path}`));
       }
     });
   }
