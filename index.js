@@ -8,6 +8,9 @@ class Workflow {
     dag.addTask(task);
     let graph = dag.sort();
     let firstTask = graph.shift();
+    if (! firstTask) {
+      return Promise.resolve();
+    }
     graph.reduce((flow, t) => {
       return flow.then(() => t.run())
     }, firstTask.run()).catch(error => {
