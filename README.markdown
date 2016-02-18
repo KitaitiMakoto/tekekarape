@@ -41,7 +41,10 @@ var sumTask = workflow.createTask({
   }
 });
 
-workflow.run(sumTask);
+workflow.run(sumTask).catch(error => {
+  console.error(error);
+  process.exit(1);
+});
 ```
 
 LICENSE
