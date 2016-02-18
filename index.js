@@ -13,10 +13,7 @@ class Workflow {
     }
     graph.reduce((flow, t) => {
       return flow.then(() => t.run(dryrun))
-    }, firstTask.run(dryrun)).catch(error => {
-      console.error(error.stack);
-      process.exit(1);
-    });
+    }, firstTask.run(dryrun));
   }
 }
 
