@@ -4,7 +4,8 @@
   "description": "A tiny workflow engine.",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "test": "",
+    "build": "babel index.js --out-file=index.es5.js --source-maps=inline --minified --no-comments"
   },
   "repository": {
     "type": "git",
