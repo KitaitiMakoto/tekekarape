@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A tiny workflow engine.",
   "main": "index.js",
+  "files": [
+    "index.es5.js"
+  ],
   "scripts": {
     "test": "",
     "build": "babel index.js --out-file=index.es5.js --source-maps=inline --minified --no-comments"
