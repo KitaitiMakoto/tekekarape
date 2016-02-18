@@ -11,7 +11,7 @@ class Workflow {
     if (! firstTask) {
       return Promise.resolve();
     }
-    graph.reduce((flow, t) => {
+    return graph.reduce((flow, t) => {
       return flow.then(() => t.run(dryrun))
     }, firstTask.run(dryrun));
   }
