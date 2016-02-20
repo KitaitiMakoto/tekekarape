@@ -175,6 +175,6 @@ export default {
 
   run(task, dryrun = false) {
     let workflow = new Workflow();
-    workflow.run(task, dryrun);
+    return workflow.run(task, dryrun);
   }
 }
