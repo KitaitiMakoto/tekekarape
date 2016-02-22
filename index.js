@@ -3,7 +3,7 @@ import crypto from "crypto";
 import toposort from "toposort";
 
 class Workflow {
-  run(task, options = {dryrun: false}) {
+  run(task, options = {verbose: false, dryrun: false}) {
     let dag = new DAG();
     dag.addTask(task);
     let graph = dag.sort();
@@ -48,17 +48,21 @@ class Task {
   /**
    * @return Promise
    */
-  run(options = {dryrun: false}) {
+  run(options = {verbose: false, dryrun: false}) {
     return this.output.exists().then(exists => {
       if (exists) {
-        if (options.dryrun) {
+        if (options.verbose || options.dryrun) {
           console.log(`${this.output.path} exists. Will skip task.`);
+        }
+        if (options.dryrun) {
           return Promise.resolve();
         }
         return;
       }
-      if (options.dryrun) {
+      if (options.verbose || options.dryrun) {
         console.log(`Will output ${this.output.path}.`);
+      }
+      if (options.dryrun) {
         return Promise.resolve();
       }
       let inputs = this.requires.map(t => t.output);
@@ -173,7 +177,7 @@ export default {
     return new PrerequisiteTask(path);
   },
 
-  run(task, options = {dryrun: false}) {
+  run(task, options = {verbose: false, dryrun: false}) {
     let workflow = new Workflow();
     return workflow.run(task, options);
   }
