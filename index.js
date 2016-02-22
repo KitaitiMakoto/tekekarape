@@ -52,7 +52,7 @@ class Task {
     return this.output.exists().then(exists => {
       if (exists) {
         if (options.verbose || options.dryrun) {
-          console.log(`${this.output.path} exists. Will skip task.`);
+          console.log(`[skip]${this.output.path}`);
         }
         if (options.dryrun) {
           return Promise.resolve();
@@ -60,7 +60,7 @@ class Task {
         return;
       }
       if (options.verbose || options.dryrun) {
-        console.log(`Will output ${this.output.path}.`);
+        console.log(`[run]${this.output.path}`);
       }
       if (options.dryrun) {
         return Promise.resolve();
