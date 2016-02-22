@@ -88,8 +88,15 @@ class PrerequisiteTask extends Task {
       path : new LocalFileTarget(path);
   }
 
-  run() {
+  run(options = {verbose: false, dryrun: false}) {
     return this.output.exists().then(exists => {
+      if (options.verbose || options.dryrun) {
+        if (exists) {
+          console.log(`[exist]${this.output.path}`);
+        } else {
+          console.log(`[missing]${this.output.path}`);
+        }
+      }
       if (! exists) {
         return Promise.reject(new Error(`Prerequisite file not exist: ${this.output.path}`));
       }
