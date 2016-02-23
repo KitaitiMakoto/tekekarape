@@ -76,6 +76,15 @@ class Task {
 }
 
 class NullTask extends Task {
+  constructor() {
+    super()
+    this.output = {
+      exists() {
+        return Promise.resolve();
+      }
+    };
+  }
+
   run() {
     return Promise.resolve();
   }
