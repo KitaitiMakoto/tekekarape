@@ -196,5 +196,22 @@ export default {
   run(task, options = {verbose: false, dryrun: false}) {
     let workflow = new Workflow();
     return workflow.run(task, options);
+  },
+
+  checkStatus(task) {
+    let dag = new DAG();
+    dag.addTask(task);
+    let tasks = dag.sort();
+    let status = tasks.filter(t => {
+      return t.output.path;
+    }).map(t => {
+      return t.output.exists().then(exists => {
+        return {
+          path: t.output.path,
+          compolete: exists
+        };
+      });
+    });
+    return Promise.all(status);
   }
 }
