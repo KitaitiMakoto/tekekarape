@@ -30,6 +30,7 @@
     "babel-cli": "^6.5.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2",
     "babel-plugin-transform-es2015-parameters": "^6.5.0",
+    "espower-babel": "^4.0.1",
     "mocha": "^2.4.5",
     "power-assert": "^1.2.0"
   }
