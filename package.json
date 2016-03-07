@@ -7,7 +7,7 @@
     "index.es5.js"
   ],
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register",
+    "test": "mocha --compilers js:babel-core/register,js:espower-babel/guess",
     "build": "babel index.js --out-file=index.es5.js --source-maps=inline --minified --no-comments"
   },
   "repository": {
