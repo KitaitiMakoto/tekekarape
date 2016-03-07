@@ -10,14 +10,16 @@ It uses files for status management.
 USAGE
 -----
 
+Let example.js:
+
 ```javascript
-import workflow from "tekekarape";
+var workflow = require("tekekarape/index.es5").default;
 
 var tenNumbersTask = workflow.createTask({
-  output: "/tmp/numbers.txt",
+  output: "./numbers.txt",
 
   run(output) {
-    let data = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n";
+    var data = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n";
 
     // Return a Promise.
     return output.write(data);
@@ -26,11 +28,11 @@ var tenNumbersTask = workflow.createTask({
 
 var sumTask = workflow.createTask({
   requires: tenNumbersTask,
-  output: "/tmp/sum.txt",
+  output: "./sum.txt",
 
   run(output, inputs) {
     // inputs is an Array of input file paths.
-    let input = inputs[0];
+    var input = inputs[0];
 
     return input.read()
       .then(data => data.split("\n")
@@ -41,11 +43,34 @@ var sumTask = workflow.createTask({
   }
 });
 
-workflow.run(sumTask).catch(error => {
-  console.error(error);
+workflow.run(sumTask, {verbose: true}).catch(error => {
+  console.error(error.stack);
   process.exit(1);
 });
 ```
+
+    % node example.js
+    [run]./numbers.txt
+    [run]./sum.txt
+    % cat numbers.txt
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    % cat sum.txt
+    55
+
+If output files are exist already, tasks are skipped.
+
+    % node example.js
+    [skip]./numbers.txt
+    [skip]./sum.txt
 
 LICENSE
 -------
