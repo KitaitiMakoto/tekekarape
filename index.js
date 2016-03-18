@@ -40,8 +40,13 @@ class DAG {
 }
 
 class Task {
-  constructor() {
-    this.requires = [];
+  constructor(output, requires = []) {
+    if (output instanceof Target) {
+      this.output = output;
+    } else {
+      this.output = new LocalFileTarget(output);
+    }
+    this.requires = requires ? [].concat(requires) : [];
   }
 
   /**
@@ -76,12 +81,11 @@ class Task {
 
 class NullTask extends Task {
   constructor() {
-    super()
-    this.output = {
+    super({
       exists() {
         return Promise.resolve();
       }
-    };
+    });
   }
 
   run() {
@@ -91,9 +95,7 @@ class NullTask extends Task {
 
 class PrerequisiteTask extends Task {
   constructor(path) {
-    super();
-    this.output = (path instanceof Target) ?
-      path : new LocalFileTarget(path);
+    super(path);
   }
 
   run(options = {verbose: false, dryrun: false}) {
