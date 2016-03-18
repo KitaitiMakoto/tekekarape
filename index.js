@@ -175,19 +175,18 @@ export default {
   },
 
   createTask(descriptor) {
-    let task = new Task();
     if (! descriptor.output) {
       throw new Error("No output given");
     }
-    task.output = (descriptor.output instanceof Target) ?
-      descriptor.output : new LocalFileTarget(descriptor.output);
+    let requires;
     if (descriptor.requires) {
       if (Array.isArray(descriptor.requires)) {
-        task.requires = descriptor.requires;
+        requires = descriptor.requires;
       } else {
-        task.requires = Array(descriptor.requires);
+        requires = Array(descriptor.requires);
       }
     }
+    let task = new Task(descriptor.output, requires);
     if (! descriptor.run) {
       throw new Error("No run() function given");
     }
